@@ -1,0 +1,77 @@
+warning: LF will be replaced by CRLF in AndroidManifest.xml.
+The file will have its original line endings in your working directory.
+[1mdiff --git a/AndroidManifest.xml b/AndroidManifest.xml[m
+[1mindex 890a8ab..7e6ebd1 100644[m
+[1m--- a/AndroidManifest.xml[m
+[1m+++ b/AndroidManifest.xml[m
+[36m@@ -7,6 +7,7 @@[m
+     <uses-sdk[m
+         android:minSdkVersion="17"[m
+         android:targetSdkVersion="21" />[m
+[32m+[m[32m    <uses-permission android:name="android.permission.INTERNET"/>[m
+ [m
+     <application[m
+         android:allowBackup="true"[m
+[36m@@ -14,7 +15,7 @@[m
+         android:label="@string/app_name"[m
+         android:theme="@style/AppTheme" >[m
+         <activity[m
+[31m-            android:name="com.coolweather.app.activity.MainActivity"[m
+[32m+[m[32m            android:name="com.coolweather.app.activity.ChooseAreaActivity"[m
+             android:label="@string/app_name" >[m
+             <intent-filter>[m
+                 <action android:name="android.intent.action.MAIN" />[m
+[1mdiff --git a/src/com/coolweather/app/db/CoolWeatherDBUtil.java b/src/com/coolweather/app/db/CoolWeatherDBUtil.java[m
+[1mindex 0dd28ef..0c2b661 100644[m
+[1m--- a/src/com/coolweather/app/db/CoolWeatherDBUtil.java[m
+[1m+++ b/src/com/coolweather/app/db/CoolWeatherDBUtil.java[m
+[36m@@ -36,7 +36,7 @@[m [mpublic class CoolWeatherDBUtil {[m
+ 	 * @param context[m
+ 	 * @return CoolWeather[m
+ 	 */[m
+[31m-	public static CoolWeatherDBUtil getInstance(Context context){[m
+[32m+[m	[32mpublic static synchronized CoolWeatherDBUtil getInstance(Context context){[m
+ 		if(coolWeatherDB == null){[m
+ 			coolWeatherDB = new CoolWeatherDBUtil(context);[m
+ 		}[m
+[36m@@ -119,15 +119,17 @@[m [mpublic class CoolWeatherDBUtil {[m
+ 	 */[m
+ 	public List<County> queryCountyList(int cityId){[m
+ 		List<County> countyList = new ArrayList<County>();[m
+[31m-		Cursor cursor = db.query(VWConsts.COUNTY_TABLE, null, VWConsts.COUNTY_CITY_ID + " = ?",[m
+[32m+[m		[32mCursor cursor = db.query(VWConsts.COUNTY_TABLE, null, VWConsts.COUNTY_CITY_ID + "= ?",[m
+ 				new String[]{String.valueOf(cityId)}, null, null, null);[m
+ 		if(cursor != null){[m
+[32m+[m			[32mwhile(cursor.moveToNext()){[m
+ 			County county = new County();[m
+ 			county.setId(cursor.getInt(cursor.getColumnIndex(VWConsts.COUNTY_ID)));[m
+ 			county.setCode(cursor.getInt(cursor.getColumnIndex(VWConsts.COUNTY_CODE)));[m
+ 			county.setName(cursor.getString(cursor.getColumnIndex(VWConsts.COUNTY_NAME)));[m
+ 			county.setCity_id(cursor.getInt(cursor.getColumnIndex(VWConsts.COUNTY_CITY_ID)));[m
+ 			countyList.add(county);[m
+[32m+[m			[32m}[m
+ 		}[m
+ 		return countyList;[m
+ 	}[m
+[1mdiff --git a/src/com/coolweather/app/util/VWConsts.java b/src/com/coolweather/app/util/VWConsts.java[m
+[1mindex a0f1fe4..6a008b9 100644[m
+[1m--- a/src/com/coolweather/app/util/VWConsts.java[m
+[1m+++ b/src/com/coolweather/app/util/VWConsts.java[m
+[36m@@ -34,13 +34,15 @@[m [mpublic class VWConsts {[m
+ 	//œÿΩ®±Ì”Ôæ‰[m
+ 	public static final String CREATE_COUNTY = "create table d_county ("+[m
+ 	                    "id integer primary key autoincrement,"+[m
+[31m-			            "county_id integer,"+[m
+[31m-	                    "county_name text"+[m
+[32m+[m			[32m            "county_code integer,"+[m
+[32m+[m	[32m                    "county_name text,"+[m
+ 			            "city_id integer)";[m
+ 	public static final String COUNTY_TABLE = "d_county";[m
+ 	public static final String COUNTY_ID = "id";[m
+ 	public static final String COUNTY_CODE = "county_code";[m
+ 	public static final String COUNTY_NAME = "county_name";[m
+ 	public static final String COUNTY_CITY_ID = "city_id";[m
+[32m+[m[41m	[m
+[32m+[m	[32mpublic static final String NET_ADDRESS = "http://guolin.tech/api/china";[m
+ [m
+ }[m

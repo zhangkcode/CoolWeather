@@ -36,7 +36,7 @@ public class CoolWeatherDBUtil {
 	 * @param context
 	 * @return CoolWeather
 	 */
-	public static CoolWeatherDBUtil getInstance(Context context){
+	public static synchronized CoolWeatherDBUtil getInstance(Context context){
 		if(coolWeatherDB == null){
 			coolWeatherDB = new CoolWeatherDBUtil(context);
 		}
@@ -119,15 +119,17 @@ public class CoolWeatherDBUtil {
 	 */
 	public List<County> queryCountyList(int cityId){
 		List<County> countyList = new ArrayList<County>();
-		Cursor cursor = db.query(VWConsts.COUNTY_TABLE, null, VWConsts.COUNTY_CITY_ID + " = ?",
+		Cursor cursor = db.query(VWConsts.COUNTY_TABLE, null, VWConsts.COUNTY_CITY_ID + "= ?",
 				new String[]{String.valueOf(cityId)}, null, null, null);
 		if(cursor != null){
+			while(cursor.moveToNext()){
 			County county = new County();
 			county.setId(cursor.getInt(cursor.getColumnIndex(VWConsts.COUNTY_ID)));
 			county.setCode(cursor.getInt(cursor.getColumnIndex(VWConsts.COUNTY_CODE)));
 			county.setName(cursor.getString(cursor.getColumnIndex(VWConsts.COUNTY_NAME)));
 			county.setCity_id(cursor.getInt(cursor.getColumnIndex(VWConsts.COUNTY_CITY_ID)));
 			countyList.add(county);
+			}
 		}
 		return countyList;
 	}

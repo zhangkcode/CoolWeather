@@ -34,13 +34,15 @@ public class VWConsts {
 	//œÿΩ®±Ì”Ôæ‰
 	public static final String CREATE_COUNTY = "create table d_county ("+
 	                    "id integer primary key autoincrement,"+
-			            "county_id integer,"+
-	                    "county_name text"+
+			            "county_code integer,"+
+	                    "county_name text,"+
 			            "city_id integer)";
 	public static final String COUNTY_TABLE = "d_county";
 	public static final String COUNTY_ID = "id";
 	public static final String COUNTY_CODE = "county_code";
 	public static final String COUNTY_NAME = "county_name";
 	public static final String COUNTY_CITY_ID = "city_id";
+	
+	public static final String NET_ADDRESS = "http://guolin.tech/api/china";
 
 }

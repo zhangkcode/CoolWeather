@@ -36,13 +36,17 @@ public class VWConsts {
 	                    "id integer primary key autoincrement,"+
 			            "county_code integer,"+
 	                    "county_name text,"+
-			            "city_id integer)";
+			            "city_id integer," +
+			            "weather_id text)";
 	public static final String COUNTY_TABLE = "d_county";
 	public static final String COUNTY_ID = "id";
 	public static final String COUNTY_CODE = "county_code";
 	public static final String COUNTY_NAME = "county_name";
 	public static final String COUNTY_CITY_ID = "city_id";
+	public static final String COUNTY_WEATHER_ID = "weather_id";
 	
 	public static final String NET_ADDRESS = "http://guolin.tech/api/china";
+	public static final String WEATHER_ADDRESS = "http://guolin.tech/api/weather?cityid=";
+	public static final String WEATHER_KEY = "&key=bc0418b57b2d4918819d3974ac1285d9";
 
 }

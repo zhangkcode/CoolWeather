@@ -111,6 +111,7 @@ public class CoolWeatherDBUtil {
 			values.put(VWConsts.COUNTY_CODE,county.getCode());
 			values.put(VWConsts.COUNTY_NAME, county.getName());
 			values.put(VWConsts.COUNTY_CITY_ID, county.getCity_id());
+			values.put(VWConsts.COUNTY_WEATHER_ID, county.getWeather_id());
 			db.insert(VWConsts.COUNTY_TABLE, null, values);
 		}
 	}
@@ -128,6 +129,7 @@ public class CoolWeatherDBUtil {
 			county.setCode(cursor.getInt(cursor.getColumnIndex(VWConsts.COUNTY_CODE)));
 			county.setName(cursor.getString(cursor.getColumnIndex(VWConsts.COUNTY_NAME)));
 			county.setCity_id(cursor.getInt(cursor.getColumnIndex(VWConsts.COUNTY_CITY_ID)));
+			county.setWeather_id(cursor.getString(cursor.getColumnIndex(VWConsts.COUNTY_WEATHER_ID)));
 			countyList.add(county);
 			}
 		}

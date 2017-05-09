@@ -15,6 +15,7 @@ import com.coolweather.app.util.VWConsts;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -42,6 +43,7 @@ public class ChooseAreaActivity extends Activity{
 	private ProgressDialog dialog = null;
 	private Province selectedProvince;
 	private City selectedCity;
+	private County selectedCounty;
 	private List<Province> provinceList;
 	private List<City> cityList;
 	private List<County> countyList;
@@ -76,6 +78,12 @@ public class ChooseAreaActivity extends Activity{
 				}else if(currentLevel == 1){
 					selectedCity = (City) cityList.get(position);
 					queryAreaData(2,selectedCity.getId());
+				}else if(currentLevel == 2){
+					selectedCounty = (County)countyList.get(position);
+					Intent intent = new Intent (ChooseAreaActivity.this,WeatherActivity.class);
+					intent.putExtra("weatherId", selectedCounty.getWeather_id());
+					startActivity(intent);
+					finish();
 				}
 				
 			}
